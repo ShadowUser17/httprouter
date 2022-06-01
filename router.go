@@ -50,10 +50,30 @@ func (router *Router) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func (router *Router) HandleFunc(location, method string, handler HandlerFunc) {
+func (router *Router) AddHandler(location, method string, handler HandlerFunc) {
 	if _, ok := router.endpoints[location]; !ok {
 		router.endpoints[location] = make(Endpoint)
 	}
 
 	router.endpoints[location][method] = handler
+}
+
+func (router *Router) GET(location string, handler HandlerFunc) {
+	router.AddHandler(location, http.MethodGet, handler)
+}
+
+func (router *Router) PUT(location string, handler HandlerFunc) {
+	router.AddHandler(location, http.MethodPut, handler)
+}
+
+func (router *Router) POST(location string, handler HandlerFunc) {
+	router.AddHandler(location, http.MethodPost, handler)
+}
+
+func (router *Router) HEAD(location string, handler HandlerFunc) {
+	router.AddHandler(location, http.MethodHead, handler)
+}
+
+func (router *Router) DELETE(location string, handler HandlerFunc) {
+	router.AddHandler(location, http.MethodDelete, handler)
 }

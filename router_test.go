@@ -1,7 +1,6 @@
 package httprouter
 
 import (
-	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -9,8 +8,8 @@ import (
 
 func TestRouter(t *testing.T) {
 	var mux = New(nil)
-	mux.HandleFunc("/", http.MethodHead, DefaultHandler)
-	mux.HandleFunc("/", http.MethodGet, DefaultHandler)
+	mux.HEAD("/", DefaultHandler)
+	mux.GET("/", DefaultHandler)
 
 	var server = httptest.NewUnstartedServer(mux)
 	server.Start()
