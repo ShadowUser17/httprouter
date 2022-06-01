@@ -58,22 +58,26 @@ func (router *Router) AddHandler(location, method string, handler HandlerFunc) {
 	router.endpoints[location][method] = handler
 }
 
-func (router *Router) GET(location string, handler HandlerFunc) {
+func (router *Router) GetLogger() *log.Logger {
+	return router.logger
+}
+
+func (router *Router) Get(location string, handler HandlerFunc) {
 	router.AddHandler(location, http.MethodGet, handler)
 }
 
-func (router *Router) PUT(location string, handler HandlerFunc) {
+func (router *Router) Put(location string, handler HandlerFunc) {
 	router.AddHandler(location, http.MethodPut, handler)
 }
 
-func (router *Router) POST(location string, handler HandlerFunc) {
+func (router *Router) Post(location string, handler HandlerFunc) {
 	router.AddHandler(location, http.MethodPost, handler)
 }
 
-func (router *Router) HEAD(location string, handler HandlerFunc) {
+func (router *Router) Head(location string, handler HandlerFunc) {
 	router.AddHandler(location, http.MethodHead, handler)
 }
 
-func (router *Router) DELETE(location string, handler HandlerFunc) {
+func (router *Router) Delete(location string, handler HandlerFunc) {
 	router.AddHandler(location, http.MethodDelete, handler)
 }

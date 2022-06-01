@@ -2,24 +2,29 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 
-    "github.com/ShadowUser17/httprouter"
+	"github.com/ShadowUser17/httprouter"
 )
 
 func Handler(rw http.ResponseWriter, req *http.Request, out *log.Logger) {
-    rw.WriteHeader(http.StatusOK)
-    fmt.Fprintf(rw, "%s %s", req.Method, req.URL)
-    out.Printf("%s %s", req.Method, req.URL)
+	rw.WriteHeader(http.StatusOK)
+	out.Printf("%s %s", req.Method, req.URL)
 }
 
 func main() {
-    var mux = httprouter.New(nil)
-    mux.HEAD("/", Handler)
-    mux.GET("/", Handler)
+	var mux = httprouter.New(nil)
+	mux.Head("/", Handler)
+	mux.Get("/", Handler)
 
-    log.Fatal(http.ListenAndServe(":8080", mux))
+	var out = mux.GetLogger()
+	var srv = http.Server{
+		Addr:     ":8080",
+		Handler:  mux,
+		ErrorLog: out,
+	}
+
+	out.Fatal(srv.ListenAndServe())
 }
 ```

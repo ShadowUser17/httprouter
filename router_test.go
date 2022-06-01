@@ -8,8 +8,8 @@ import (
 
 func TestRouter(t *testing.T) {
 	var mux = New(nil)
-	mux.HEAD("/", DefaultHandler)
-	mux.GET("/", DefaultHandler)
+	mux.Head("/", DefaultHandler)
+	mux.Get("/", DefaultHandler)
 
 	var server = httptest.NewUnstartedServer(mux)
 	server.Start()
