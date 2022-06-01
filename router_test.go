@@ -1,24 +1,16 @@
 package httprouter
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 )
 
-func handler(rw http.ResponseWriter, req *http.Request, out *log.Logger) {
-	rw.WriteHeader(http.StatusOK)
-	fmt.Fprintf(rw, "%s %s", req.Method, req.URL)
-}
-
 func TestRouter(t *testing.T) {
-	var mux = NewRouter(nil)
-	mux.HandleFunc("/", http.MethodHead, handler)
-	mux.HandleFunc("/", http.MethodGet, handler)
-	//mux.HandleFunc("/", http.MethodPost, handler)
+	var mux = New(nil)
+	mux.HandleFunc("/", http.MethodHead, DefaultHandler)
+	mux.HandleFunc("/", http.MethodGet, DefaultHandler)
 
 	var server = httptest.NewUnstartedServer(mux)
 	server.Start()
